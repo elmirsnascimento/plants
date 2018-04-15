@@ -4,9 +4,15 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
+		maven {
+      		url "https://plugins.gradle.org/m2/"
+    		}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("se.transmode.gradle:gradle-docker:1.2")
+		
+		
 	}
 }
 
@@ -14,6 +20,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker'
 
 group = 'br.com.esndev'
 version = '0.0.1-SNAPSHOT'
@@ -44,4 +51,9 @@ springBoot {
 			name = 'Plants Application'
 		}
 	}
+}
+
+docker {
+    baseImage "frolvlad/alpine-oraclejdk8:slim"
+    maintainer 'Hudson Mendes "hudsonmendes@gmail.com"'
 }
