@@ -14,4 +14,6 @@ public class UserFilter {
 
 	private String name;
 
+	private String email;
+
 }

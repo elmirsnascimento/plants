@@ -11,27 +11,27 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.service.base.BaseService;
 import lombok.Data;
 
 @Data
-public class BaseController<E extends BaseEntity, F> {
+public class BaseController<E extends BaseEntity, F, S extends BaseService<E, F>> {
 
 	@Autowired
 	private BaseService<E, F> service;
-
-	@RequestMapping(value = "/findByFilter", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	@PostMapping(value = "/find")
 	public Page<E> findByFilter(@RequestBody F filter, @PageableDefault(size = 5) Pageable pageable) {
 		return getService().findByFilter(filter, pageable);
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> create(@RequestBody E entity) {
 		try {
 			return ResponseEntity.accepted().body(getService().save(entity));
@@ -39,8 +39,8 @@ public class BaseController<E extends BaseEntity, F> {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	
-	@RequestMapping(value = "/createMany", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@PostMapping(value = "/many", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> createMany(@RequestBody List<E> entities) {
 		try {
 			return ResponseEntity.accepted().body(getService().saveAll(entities));
@@ -49,9 +49,9 @@ public class BaseController<E extends BaseEntity, F> {
 		}
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<Object> update(@RequestBody E entity) {
-		Optional<E> optionalEntity = getService().findById(entity.getId());
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody E entity) {
+		Optional<E> optionalEntity = getService().findById(id);
 
 		if (!optionalEntity.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -64,14 +64,14 @@ public class BaseController<E extends BaseEntity, F> {
 
 	}
 
-	@DeleteMapping("/deleteById")
-	public ResponseEntity<Object> deleteById(@RequestBody E entity) {
-		Optional<E> optionalEntity = getService().findById(entity.getId());
+	@DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Long id) {
+		Optional<E> optionalEntity = getService().findById(id);
 
 		if (!optionalEntity.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		getService().deleteById(entity.getId());
+		getService().deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 

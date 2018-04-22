@@ -13,7 +13,9 @@ import br.com.esndev.plants.repository.base.BaseRepository;
 @Repository
 public interface UserRepository extends BaseRepository<User, UserFilter> {
 
-	@Query("select u from User u where (:#{#filter.name} is null or UPPER(u.name) LIKE UPPER(CONCAT('%', :#{#filter.name}, '%')))")
+	@Query("select new User(u.id, u.name, u.email) from User u where "
+			+ " (:#{#filter.name} is null or UPPER(u.name) LIKE UPPER(CONCAT('%', :#{#filter.name}, '%'))) "
+			+ " and (:#{#filter.email} is null or UPPER(u.email) = UPPER(:#{#filter.email}) )")
 	Page<User> findByFilter(@Param("filter") UserFilter filter, Pageable pageable);
 
 }

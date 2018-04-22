@@ -1,7 +1,9 @@
 package br.com.esndev.plants.entity;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,5 +29,22 @@ public class User extends BaseEntity {
 	@NotNull
 	@Column(name = "NAME", length = 255, unique = true)
 	private String name;
+	
+	@NotNull
+    @Column(name= "EMAIL", length = 50, unique = true)
+	private String email;
+	
+	@NotNull
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "PASSWORD", length = 255, unique = false)
+	private String password;
+	
+	
+	public User (Long id, String name, String email) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+	}
+	
 
 }

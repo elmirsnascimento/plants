@@ -1,8 +1,11 @@
 package br.com.esndev.plants.service.impl.base;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,7 +18,7 @@ import br.com.esndev.plants.service.base.BaseService;
 public class BaseServiceImpl<E, F, R extends BaseRepository<E, F>> implements BaseService<E, F> {
 
 	@Autowired
-	private R repository;
+	public R repository;
 
 	@Override
 	public List<E> findAll() {
@@ -48,7 +51,7 @@ public class BaseServiceImpl<E, F, R extends BaseRepository<E, F>> implements Ba
 	public E save(E entity) throws DataIntegrityViolationException {
 		return repository.save(entity);
 	}
-	
+
 	@Override
 	public List<E> saveAll(List<E> entities) throws DataIntegrityViolationException {
 		return repository.saveAll(entities);
