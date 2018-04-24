@@ -23,11 +23,6 @@ public class StrainController extends BaseController<Strain, StrainFilter, Strai
 		if (entity.getName() != null) {
 			entity.setName(entity.getName().toUpperCase());
 		}
-		entity.setSpecie(entity.getSpecie());
-		entity.setRequiredExpertize(entity.getRequiredExpertize());
-		entity.setExpectedHeight(entity.getExpectedHeight());
-		entity.setExpectedYield(entity.getExpectedYield());
-		entity.setExpectedFlowerWeeks(entity.getExpectedFlowerWeeks());
 		return super.create(entity);
 	}
 
@@ -35,11 +30,9 @@ public class StrainController extends BaseController<Strain, StrainFilter, Strai
 	@PostMapping({ "/many" })
 	public ResponseEntity<Object> createMany(@RequestBody List<Strain> entities) {
 		entities.forEach(entity -> {
-			entity.setSpecie(entity.getSpecie());
-			entity.setRequiredExpertize(entity.getRequiredExpertize());
-			entity.setExpectedHeight(entity.getExpectedHeight());
-			entity.setExpectedYield(entity.getExpectedYield());
-			entity.setExpectedFlowerWeeks(entity.getExpectedFlowerWeeks());
+			if (entity.getName() != null) {
+				entity.setName(entity.getName().toUpperCase());
+			}
 		});
 		return super.createMany(entities);
 	}

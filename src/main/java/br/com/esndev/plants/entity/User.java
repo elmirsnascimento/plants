@@ -1,5 +1,7 @@
 package br.com.esndev.plants.entity;
 
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
@@ -29,6 +33,10 @@ public class User extends BaseEntity {
 	@NotNull
 	@Column(name = "NAME", length = 255, unique = true)
 	private String name;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "REGISTRATION_DATE", nullable = false)
+	private Date registrationDate;
 	
 	@NotNull
     @Column(name= "EMAIL", length = 50, unique = true)

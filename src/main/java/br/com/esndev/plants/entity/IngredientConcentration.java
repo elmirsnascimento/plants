@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
@@ -17,25 +19,29 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "SOIL_INGREDIENT")
+@Table(name = "SOIL_INGREDIENT_CONCENTRATION")
 @EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
-public class SoilIngredient extends BaseEntity implements Serializable {
+public class IngredientConcentration extends BaseEntity implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1836975409762015978L;
+	private static final long serialVersionUID = -1034834126606655165L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "NAME", nullable = false, length = 255)
-	private String name;
-
-	@OneToMany(mappedBy = "soilIngredient")
-	private Set<IngredientConcentration> ingredientConcentrations;
+	@Column(name = "CONCENTRATION", nullable = false)
+	private int concentration;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_SOIL_INGREDIENT", nullable = false)
+	private SoilIngredient soilIngredient;
+	
+	@ManyToMany
+	private Set<SoilMix> soilMixes;
 
 }
