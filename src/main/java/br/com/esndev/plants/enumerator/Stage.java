@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @AllArgsConstructor
 public enum Stage {
-	SEED("SEED"), SEEDLING("SEEDLING"), VEGETATIVE("VEGETATIVE"), FLOWERING("FLOWERING");
+	SEED("SEED"), SEEDLING("SEEDLING"), VEGETATIVE("VEGETATIVE"), FLOWERING("FLOWERING"), HARVEST("HARVEST");
 
 	private @Getter @Setter String description;
 }

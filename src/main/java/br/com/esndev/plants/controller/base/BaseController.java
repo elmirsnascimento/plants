@@ -18,14 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.service.base.BaseService;
-import lombok.Data;
 
-@Data
 public class BaseController<E extends BaseEntity, F, S extends BaseService<E, F>> {
 
 	@Autowired
 	private BaseService<E, F> service;
-	
+
 	@PostMapping(value = "/find")
 	public Page<E> findByFilter(@RequestBody F filter, @PageableDefault(size = 5) Pageable pageable) {
 		return getService().findByFilter(filter, pageable);
@@ -73,6 +71,11 @@ public class BaseController<E extends BaseEntity, F, S extends BaseService<E, F>
 		}
 		getService().deleteById(id);
 		return ResponseEntity.ok().build();
+	}
+
+	@SuppressWarnings("unchecked")
+	public S getService() {
+		return (S) service;
 	}
 
 }

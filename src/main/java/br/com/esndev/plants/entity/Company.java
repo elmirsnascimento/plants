@@ -1,15 +1,12 @@
 package br.com.esndev.plants.entity;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
@@ -18,16 +15,16 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "SOIL_INGREDIENT")
+@Table(name = "COMPANY")
 @EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
-public class SoilIngredient extends BaseEntity implements Serializable {
+public class Company extends BaseEntity implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1836975409762015978L;
+	private static final long serialVersionUID = -2225755507631569415L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,11 +32,4 @@ public class SoilIngredient extends BaseEntity implements Serializable {
 
 	@Column(name = "NAME", nullable = false, length = 255)
 	private String name;
-	
-	@ManyToMany
-	private Set<Fertilizer> fertilizers;
-
-	@OneToMany(mappedBy = "soilIngredient")
-	private Set<IngredientConcentration> ingredientConcentrations;
-
 }

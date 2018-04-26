@@ -53,15 +53,19 @@ public class Log extends BaseEntity implements Serializable {
 	@Column(name = "LIGHT_IN_WATTS")
 	private int lightInWatts;
 
+	@Column(name = "VESSEL_SIZE", nullable = true)
+	private int vesselSize;
+
 	@ManyToOne
 	@JoinColumn(name = "ID_SOIL_MIX")
 	private SoilMix soilMix;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_WATERING", nullable = true)
+	private Watering watering;
+	
 	@Column(name = "WATERING_IN_LITERS", nullable = true)
 	private int wateringInLiters;
-
-	@Column(name = "WATERING_FREQUENCY", nullable = true)
-	private int wateringFrequency;
 
 	@Column(name = "STAGE")
 	@Enumerated(EnumType.STRING)

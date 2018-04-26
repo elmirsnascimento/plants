@@ -16,6 +16,10 @@ public class SoilMixFilter {
 
 	private String name;
 	
+	private Long id;
+	
+	private Long userId;
+	
 	private String userName;
 	
 	private Stage[] mostSuitableStages;
