@@ -51,6 +51,9 @@ public class Fertilizer extends BaseEntity implements Serializable {
 	@Column(name = "DILUTABLE_IN_WATER", nullable = false)
 	private boolean dilutableInWater;
 
+	@Column(name = "WATER_PUMPED", nullable = false)
+	private boolean waterPumped;
+
 	@Column(name = "NITROGEN_RATIO", nullable = true)
 	private int nitrogenRatio;
 

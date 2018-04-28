@@ -2,8 +2,6 @@ package br.com.esndev.plants.filter;
 
 import org.springframework.stereotype.Component;
 
-import br.com.esndev.plants.entity.SoilIngredient;
-import br.com.esndev.plants.enumerator.Stage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,20 +10,22 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SoilMixFilter {
+public class FertilizerFilter {
 
 	private String name;
-	
-	private Long id;
-	
-	private Long idUser;
-	
-	private String nameUser;
-	
-	private Stage[] mostSuitableStages;
 
 	private Long[] idsSoilIngredients;
-	
-	
-	
+
+	private Long idCompany;
+
+	private Long idUser;
+
+	private Integer nitrogenRatio;
+
+	private Integer phosphorusRatio;
+
+	private Integer potassiumRatio;
+
+	private Boolean onlyThoseOwnedByMyUser;
+
 }

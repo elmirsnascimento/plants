@@ -16,6 +16,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.esndev.plants.entity.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -52,6 +54,7 @@ public class User extends BaseEntity {
 	@OneToMany(mappedBy = "user")
 	private Set<SoilMix> soilMixes;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private Set<Fertilizer> fertilizers;
 

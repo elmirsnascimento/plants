@@ -44,12 +44,12 @@ public class SoilMixController extends BaseController<SoilMix, SoilMixFilter, So
 		return super.createMany(entities);
 	}
 
-	@DeleteMapping(value = "/{userId}/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/{idUser}/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Long id,
-			@PathVariable(value = "userId") Long userId) {
+			@PathVariable(value = "idUser") Long idUser) {
 		SoilMixFilter filter = new SoilMixFilter();
 		filter.setId(id);
-		filter.setUserId(userId);
+		filter.setIdUser(idUser);
 		Optional<List<SoilMix>> optionalEntities = getService().findByFilter(filter);
 
 		if (!optionalEntities.isPresent()) {
