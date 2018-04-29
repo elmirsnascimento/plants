@@ -1,0 +1,16 @@
+[
+{
+	"name": "BLACK DOMINA #1",
+	"weeksToLive" : 18,
+	"strain" : { "id": 4},
+	"lastLog" : { "id": 1},
+	"grow" : { "id": 1}
+},
+{
+	"name": "BLACK DOMINA #2",
+	"weeksToLive" : 18,
+	"strain" : { "id": 4},
+	"lastLog" : { "id": 1},
+	"grow" : { "id": 1}
+}
+]

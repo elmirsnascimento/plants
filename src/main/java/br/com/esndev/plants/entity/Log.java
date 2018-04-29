@@ -46,18 +46,18 @@ public class Log extends BaseEntity implements Serializable {
 	@Column(name = "REGISTRATION_DATE", nullable = false)
 	private Date registrationDate;
 
-	@Column(name = "LIGHT_TYPE")
+	@Column(name = "LIGHT_TYPE", nullable = true)
 	@Enumerated(EnumType.STRING)
 	private LightType lightType;
 
-	@Column(name = "LIGHT_IN_WATTS")
+	@Column(name = "LIGHT_IN_WATTS", nullable = true)
 	private int lightInWatts;
 
 	@Column(name = "VESSEL_SIZE", nullable = true)
 	private int vesselSize;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_SOIL_MIX")
+	@JoinColumn(name = "ID_SOIL_MIX", nullable = true)
 	private SoilMix soilMix;
 	
 	@ManyToOne
@@ -67,7 +67,7 @@ public class Log extends BaseEntity implements Serializable {
 	@Column(name = "WATERING_IN_LITERS", nullable = true)
 	private int wateringInLiters;
 
-	@Column(name = "STAGE")
+	@Column(name = "STAGE", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Stage stage;
 

@@ -23,5 +23,13 @@
 	"expectedHeight": "HIGHER_THAN_78",
 	"expectedYield": "HIGHER_THAN_3_OUNCES",
 	"expectedFlowerWeeks": "LOWER_THAN_9"
+},
+{
+	"name": "BLACK DOMINA",
+	"specie": "INDICA",
+	"requiredExpertize": "LOW",
+	"expectedHeight": "LOWER_THAN_30",
+	"expectedYield": "HIGHER_THAN_3_OUNCES",
+	"expectedFlowerWeeks": "LOWER_THAN_9"
 }
 ]

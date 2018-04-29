@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
+import br.com.esndev.plants.enumerator.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -41,19 +44,26 @@ public class Plant extends BaseEntity implements Serializable {
 	private String name;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "REGISTRATION_DATE")
+	@Column(name = "REGISTRATION_DATE", nullable = false)
 	private Date registrationDate;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "LAST_UPDATE_DATE", nullable = true)
-	private Date lastUpdateDate;
+	@Column(name = "WEEKS_TO_LIVE", nullable = false)
+	private int weeksToLive;
+
+	@Column(name = "GENDER", nullable = true)
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_STRAIN")
+	@JoinColumn(name = "ID_STRAIN", nullable = true)
 	private Strain strain;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_LAST_LOG", nullable = false)
+	private Log lastLog;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_GROW")
+	@JoinColumn(name = "ID_GROW", nullable = false)
 	private Grow grow;
 
 	@OneToMany(mappedBy = "plant")
