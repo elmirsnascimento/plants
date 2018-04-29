@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// http.csrf().disable().authorizeRequests().antMatchers("/plants/**").permitAll().anyRequest().hasRole("USER").and()
-		// .httpBasic().authenticationEntryPoint(authEntryPoint);
+		http.httpBasic().authenticationEntryPoint(authEntryPoint);
 		http.csrf().disable().httpBasic().and().authorizeRequests().anyRequest().authenticated();
 		http.headers().frameOptions().disable();
 	}

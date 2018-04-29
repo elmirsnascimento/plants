@@ -11,7 +11,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"br.com.esndev.plants.repository"})
+@EnableJpaRepositories(basePackages = { "br.com.esndev.plants.repository" })
 @EntityScan(basePackages = "br.com.esndev.plants.entity")
 @EnableTransactionManagement
 public class JpaConfig {
@@ -25,12 +25,13 @@ public class JpaConfig {
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
-	
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean
 	public ServletRegistrationBean h2servletRegistration() {
-	    ServletRegistrationBean registration = new ServletRegistrationBean(new WebServlet());
+		ServletRegistrationBean registration = new ServletRegistrationBean(new WebServlet());
 		registration.addUrlMappings("/h2_console/*");
-	    return registration;
+		return registration;
 	}
 
 }

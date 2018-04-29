@@ -7,8 +7,10 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,6 +27,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
+@SequenceGenerator(name = "SEQ_GROW", initialValue = 1, allocationSize = 1, sequenceName="SEQ_GROW")
 public class Grow extends BaseEntity implements Serializable {
 	/**
 	* 
@@ -32,7 +35,7 @@ public class Grow extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -4906606583950386420L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GROW")
 	private @Getter @Setter Long id;
 
 	@Column(name = "NAME", nullable = false, length = 255)

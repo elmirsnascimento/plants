@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,6 +32,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
+@SequenceGenerator(name = "SEQ_SOIL_MIX", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_SOIL_MIX")
 public class SoilMix extends BaseEntity implements Serializable {
 
 	/**
@@ -39,7 +41,7 @@ public class SoilMix extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -4330310401884965045L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SOIL_MIX")
 	private Long id;
 
 	@Column(name = "NAME", nullable = false, length = 255)

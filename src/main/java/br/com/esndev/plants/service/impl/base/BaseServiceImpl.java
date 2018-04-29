@@ -1,17 +1,20 @@
 package br.com.esndev.plants.service.impl.base;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.repository.base.BaseRepository;
 import br.com.esndev.plants.service.base.BaseService;
 
-public class BaseServiceImpl<E, F, R extends BaseRepository<E, F>> implements BaseService<E, F> {
+public class BaseServiceImpl<E extends BaseEntity, F, R extends BaseRepository<E, F>> implements BaseService<E, F> {
 
 	@Autowired
 	public R repository;
@@ -53,4 +56,16 @@ public class BaseServiceImpl<E, F, R extends BaseRepository<E, F>> implements Ba
 		return repository.saveAll(entities);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<E> replicate(E entity, int amoutOfTimesToReplicate) {
+		List<E> replicas = new ArrayList<E>();
+		try {
+			for (int amout = 1; amout <= amoutOfTimesToReplicate; amout++) {
+				replicas.add((E) entity.clone());
+			}
+		} catch (CloneNotSupportedException e) {
+			throw new ServiceException("Impossible to replicate.");
+		}
+		return replicas;
+	}
 }

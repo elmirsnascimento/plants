@@ -14,7 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.enumerator.Stage;
@@ -23,10 +25,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "FERTILIZER")
+@Table(name = "FERTILIZER", uniqueConstraints = @UniqueConstraint(columnNames = { "NAME", "ID_USER"}))
 @EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
+@SequenceGenerator(name = "SEQ_FERTILIZER", initialValue = 1, allocationSize = 1, sequenceName="SEQ_FERTILIZER")
 public class Fertilizer extends BaseEntity implements Serializable {
 
 	/**
@@ -35,7 +38,7 @@ public class Fertilizer extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -6052051281533323016L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FERTILIZER")
 	private Long id;
 
 	@Column(name = "NAME", nullable = false, length = 255)

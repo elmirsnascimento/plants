@@ -14,9 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.enumerator.Gender;
@@ -25,10 +27,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "PLANT")
+@Table(name = "PLANT", uniqueConstraints = @UniqueConstraint(columnNames = { "NAME" }))
 @EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
+@SequenceGenerator(name = "SEQ_PLANT", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_PLANT")
 public class Plant extends BaseEntity implements Serializable {
 
 	/**
@@ -37,7 +40,7 @@ public class Plant extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 6425977014812446983L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PLANT")
 	private Long id;
 
 	@Column(name = "NAME", nullable = false, length = 255)
@@ -47,8 +50,14 @@ public class Plant extends BaseEntity implements Serializable {
 	@Column(name = "REGISTRATION_DATE", nullable = false)
 	private Date registrationDate;
 
-	@Column(name = "WEEKS_TO_LIVE", nullable = false)
-	private int weeksToLive;
+	@Column(name = "VEGETATIVE_DATE", nullable = false)
+	private Date vegetativeDate;
+
+	@Column(name = "FLOWERING_DATE", nullable = false)
+	private Date floweringDate;
+
+	@Column(name = "HARVEST_DATE", nullable = false)
+	private Date harvestDate;
 
 	@Column(name = "GENDER", nullable = true)
 	@Enumerated(EnumType.STRING)
@@ -57,7 +66,7 @@ public class Plant extends BaseEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ID_STRAIN", nullable = true)
 	private Strain strain;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ID_LAST_LOG", nullable = false)
 	private Log lastLog;
