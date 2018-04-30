@@ -47,6 +47,10 @@ public class Comment implements Serializable {
 	private Grow grow;
 
 	@ManyToOne
+	@JoinColumn(name = "ID_PLANT")
+	private Plant plant;
+
+	@ManyToOne
 	@JoinColumn(name = "ID_SOIL_MIX")
 	private SoilMix soilMix;
 

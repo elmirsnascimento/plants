@@ -14,4 +14,12 @@ public class GrowFilter {
 
 	private String name;
 
+	private Long idPlant;
+
+	private Long idUser;
+
+	private Boolean terminated;
+
+	private Long[] idsStrains;
+
 }

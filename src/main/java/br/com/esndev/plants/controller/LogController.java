@@ -30,7 +30,7 @@ public class LogController extends BaseController<Log, LogFilter, LogServiceImpl
 	@PostMapping({ "/replicate" })
 	public ResponseEntity<Object> replicate(@RequestBody Log entity) {
 		try {
-			return super.createMany(this.getService().createReplicas(entity));
+			return super.createMany(this.getService().replicate(entity));
 		} catch (ServiceException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

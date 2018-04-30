@@ -72,10 +72,17 @@ public class Plant extends BaseEntity implements Serializable {
 	private Log lastLog;
 
 	@ManyToOne
+	@JoinColumn(name = "ID_USER", nullable = false)
+	private User user;
+
+	@ManyToOne
 	@JoinColumn(name = "ID_GROW", nullable = false)
 	private Grow grow;
 
 	@OneToMany(mappedBy = "plant")
 	private Set<Log> log;
+
+	@OneToMany(mappedBy = "plant")
+	private Set<Comment> comments;
 
 }

@@ -13,7 +13,13 @@ import br.com.esndev.plants.repository.base.BaseRepository;
 @Repository
 public interface GrowRepository extends BaseRepository<Grow, GrowFilter> {
 
-	@Query("select s from Grow s where (:#{#filter.name} is null or UPPER(s.name) LIKE UPPER(CONCAT('%', :#{#filter.name}, '%')))")
+	@Query("select g from Grow g " + " left join g.plants p " + " join p.strain s " + " join g.user u " + " where "
+			+ " (:#{#filter.name} is null or UPPER(g.name) LIKE UPPER(CONCAT('%', :#{#filter.name}, '%'))) "
+			+ " AND (:#{#filter.idPlant} is null or p.id = :#{#filter.idPlant}) "
+			+ " AND (:#{#filter.idUser} is null or u.id = :#{#filter.idUser}) "
+			+ " AND (:#{#filter.terminated} is null or (:#{#filter.terminated} is true and g.terminated = true)"
+			+ " OR (:#{#filter.terminated} is false and g.terminated = false)) "
+			+ " AND (:#{#filter.strains} is null or s.id IN :#{#filter.idsStrains}) ")
 	Page<Grow> findByFilter(@Param("filter") GrowFilter filter, Pageable pageable);
 
 }

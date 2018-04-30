@@ -9,11 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import lombok.Data;
@@ -23,11 +26,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "GROW")
+@Table(name = "GROW", uniqueConstraints = @UniqueConstraint(columnNames = { "NAME", "ID_USER" }))
 @EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
-@SequenceGenerator(name = "SEQ_GROW", initialValue = 1, allocationSize = 1, sequenceName="SEQ_GROW")
+@SequenceGenerator(name = "SEQ_GROW", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_GROW")
 public class Grow extends BaseEntity implements Serializable {
 	/**
 	* 
@@ -39,19 +42,18 @@ public class Grow extends BaseEntity implements Serializable {
 	private @Getter @Setter Long id;
 
 	@Column(name = "NAME", nullable = false, length = 255)
-	private @Getter @Setter String name;
+	private String name;
+
+	@Column(name = "TERMINATED", nullable = false, length = 255)
+	private boolean terminated;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "REGISTRATION_DATE")
-	private @Getter @Setter Date registrationDate;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "EXPECT_END_DATE")
-	private @Getter @Setter Date expectedEndingDate;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name = "LAST_UPDATE_DATE")
-	private @Getter @Setter Date lastUpdateDate;
+	@Column(name = "REGISTRATION_DATE", nullable = false)
+	private Date registrationDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_USER", nullable = false)
+	private User user;
 
 	@OneToMany(mappedBy = "grow")
 	private Set<Comment> comments;

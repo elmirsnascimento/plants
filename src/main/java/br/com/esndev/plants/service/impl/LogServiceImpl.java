@@ -21,16 +21,16 @@ public class LogServiceImpl extends BaseServiceImpl<Log, LogFilter, LogRepositor
 	@Autowired
 	private PlantServiceImpl plantService;
 
-	public List<Log> createReplicas(Log log) throws ServiceException {
+	public List<Log> replicate(Log log) throws ServiceException {
 		List<Log> logs = new ArrayList<Log>();
-		logs.addAll(this.replicate(log, plantService.getDaysToFlowering(log.getPlant().getId()), Stage.VEGETATIVE,
+		logs.addAll(this.createReplicas(log, plantService.getDaysToFlowering(log.getPlant().getId()), Stage.VEGETATIVE,
 				log.getPlant().getVegetativeDate()));
-		logs.addAll(this.replicate(log, plantService.getDaysToHarvest(log.getPlant().getId()), Stage.FLOWERING,
+		logs.addAll(this.createReplicas(log, plantService.getDaysToHarvest(log.getPlant().getId()), Stage.FLOWERING,
 				log.getPlant().getFloweringDate()));
 		return logs;
 	}
 
-	private List<Log> replicate(Log cloneableLog, int amoutOfTimesToReplicate, Stage stage, Date lastLogDate)
+	private List<Log> createReplicas(Log cloneableLog, int amoutOfTimesToReplicate, Stage stage, Date lastLogDate)
 			throws ServiceException {
 		List<Log> logs = new ArrayList<Log>();
 		Calendar calendar = Calendar.getInstance();
