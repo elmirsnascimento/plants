@@ -14,23 +14,28 @@ import br.com.esndev.plants.exception.impl.ServiceException;
 import br.com.esndev.plants.filter.LogFilter;
 import br.com.esndev.plants.repository.LogRepository;
 import br.com.esndev.plants.service.impl.base.BaseServiceImpl;
+import lombok.Getter;
+import lombok.Setter;
 
 @Service
 public class LogServiceImpl extends BaseServiceImpl<Log, LogFilter, LogRepository> {
 
 	@Autowired
-	private PlantServiceImpl plantService;
+	private @Getter @Setter PlantServiceImpl plantService;
+
+	@Autowired
+	private @Getter @Setter WateringServiceImpl wateringService;
 
 	public List<Log> replicate(Log log) throws ServiceException {
 		List<Log> logs = new ArrayList<Log>();
-		logs.addAll(this.createReplicas(log, plantService.getDaysToFlowering(log.getPlant().getId()), Stage.VEGETATIVE,
-				log.getPlant().getVegetativeDate()));
-		logs.addAll(this.createReplicas(log, plantService.getDaysToHarvest(log.getPlant().getId()), Stage.FLOWERING,
+		logs.addAll(this.generateReplicas(log, plantService.getDaysToFlowering(log.getPlant().getId()),
+				Stage.VEGETATIVE, log.getPlant().getVegetativeDate()));
+		logs.addAll(this.generateReplicas(log, plantService.getDaysToHarvest(log.getPlant().getId()), Stage.FLOWERING,
 				log.getPlant().getFloweringDate()));
 		return logs;
 	}
 
-	private List<Log> createReplicas(Log cloneableLog, int amoutOfTimesToReplicate, Stage stage, Date lastLogDate)
+	private List<Log> generateReplicas(Log cloneableLog, int amoutOfTimesToReplicate, Stage stage, Date lastLogDate)
 			throws ServiceException {
 		List<Log> logs = new ArrayList<Log>();
 		Calendar calendar = Calendar.getInstance();
@@ -42,6 +47,7 @@ public class LogServiceImpl extends BaseServiceImpl<Log, LogFilter, LogRepositor
 					Log log = (Log) cloneableLog.clone();
 
 					log.setLogDate(calendar.getTime());
+					log.setWatering(wateringService.generateWateringForLog(log));
 					logs.add(log);
 					wateringFrequencyAmout = 0;
 				}
@@ -53,4 +59,5 @@ public class LogServiceImpl extends BaseServiceImpl<Log, LogFilter, LogRepositor
 		}
 		return logs;
 	}
+
 }

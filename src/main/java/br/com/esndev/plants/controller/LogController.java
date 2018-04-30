@@ -24,6 +24,7 @@ public class LogController extends BaseController<Log, LogFilter, LogServiceImpl
 		if (entity.getDescription() != null) {
 			entity.setDescription(entity.getDescription().toUpperCase());
 		}
+		entity.setWatering(this.getService().getWateringService().generateWateringForLog(entity));
 		return super.create(entity);
 	}
 
@@ -36,14 +37,4 @@ public class LogController extends BaseController<Log, LogFilter, LogServiceImpl
 		}
 	}
 
-	@Override
-	@PostMapping({ "/many" })
-	public ResponseEntity<Object> createMany(@RequestBody List<Log> entities) {
-		entities.forEach(entity -> {
-			if (entity.getDescription() != null) {
-				entity.setDescription(entity.getDescription().toUpperCase());
-			}
-		});
-		return super.createMany(entities);
-	}
 }

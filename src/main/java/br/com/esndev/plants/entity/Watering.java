@@ -9,9 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,10 +22,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "FERTILIZATION")
+@Table(name = "WATERING")
 @EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
+@SequenceGenerator(name = "SEQ_WATERING", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_WATERING")
 public class Watering extends BaseEntity implements Serializable {
 	/**
 	* 
@@ -33,25 +34,28 @@ public class Watering extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 2059530725228448651L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_WATERING")
 	private Long id;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "REGISTRATION_DATE", nullable = false)
 	private Date registrationDate;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "WATERING_DATE", nullable = false)
+	private Date wateringDate;
+
 	@Column(name = "SKIP", nullable = false)
 	private boolean skip;
 
-	@Column(name = "EXPECTED_PH", nullable = false)
-	private float expectedPH;
+	@Column(name = "PH", nullable = false)
+	private float ph;
 
-	@Column(name = "EXPECTED_EC", nullable = false)
-	private float expectedEC;
+	@Column(name = "EC", nullable = false)
+	private float ec;
 
-	@ManyToOne
-	@JoinColumn(name = "ID_PLANT", nullable = false)
-	private Plant plant;
+	@OneToOne(mappedBy = "watering")
+	private Log log;
 
 	@ManyToMany
 	private Set<Fertilizer> fertilizers;
