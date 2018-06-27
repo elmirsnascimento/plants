@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,5 +54,12 @@ public class UserController extends BaseController<User, UserFilter, UserService
 			entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 		});
 		return super.createMany(entities);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping({ "/profilePicture/{id}" })
+	public ResponseEntity<Object> getProfilePicture(@PathVariable Long idUser) {
+
+		return new ResponseEntity(this.getService().getUserProfilePicture(idUser), HttpStatus.OK);
 	}
 }

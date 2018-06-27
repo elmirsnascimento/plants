@@ -68,4 +68,8 @@ public class BaseServiceImpl<E extends BaseEntity, F, R extends BaseRepository<E
 		}
 		return replicas;
 	}
+
+	public R getRepository() {
+		return this.repository;
+	}
 }

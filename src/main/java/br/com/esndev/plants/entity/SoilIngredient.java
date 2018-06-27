@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import lombok.Data;
@@ -36,7 +38,9 @@ public class SoilIngredient extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SOIL_INGREDIENT")
 	private Long id;
 
-	@Column(name = "NAME", nullable = false, length = 255)
+	@Column(name = "NAME", nullable = false, length = 50)
+	@NotEmpty
+	@Size(min=3, max=50)
 	private String name;
 
 	@ManyToMany

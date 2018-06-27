@@ -20,6 +20,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.enumerator.Stage;
@@ -44,11 +49,15 @@ public class SoilMix extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SOIL_MIX")
 	private Long id;
 
-	@Column(name = "NAME", nullable = false, length = 255)
+	@Column(name = "NAME", nullable = false, length = 50)
+	@NotEmpty
+	@Size(min = 3, max = 50)
 	private String name;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "REGISTRATION_DATE", nullable = false)
+	@NonNull
+	@PastOrPresent
 	private Date registrationDate;
 
 	@Column(name = "MOST_SUITABLE_STAGE")
@@ -56,13 +65,15 @@ public class SoilMix extends BaseEntity implements Serializable {
 	private Stage mostSuitableStage;
 
 	@ManyToMany(mappedBy = "soilMixes")
+	@NotEmpty
 	private Set<IngredientConcentration> ingredientConcentrations;
 
 	@OneToMany(mappedBy = "soilMix")
 	private Set<Log> logs;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_USER")
+	@JoinColumn(name = "ID_USER", nullable = false)
+	@NonNull
 	private User user;
 
 	@OneToMany(mappedBy = "soilMix")

@@ -12,6 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.lang.NonNull;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import lombok.Data;
@@ -35,13 +40,23 @@ public class IngredientConcentration extends BaseEntity implements Serializable 
 	private Long id;
 
 	@Column(name = "CONCENTRATION", nullable = false)
-	private int concentration;
-	
+	@NonNull
+	@Min(value = 0)
+	@Max(value = 100)
+	private Integer concentration;
+
 	@ManyToOne
 	@JoinColumn(name = "ID_SOIL_INGREDIENT", nullable = false)
+	@NonNull
 	private SoilIngredient soilIngredient;
-	
+
 	@ManyToMany
+	@NotEmpty
 	private Set<SoilMix> soilMixes;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_USER")
+	@NonNull
+	private User user;
 
 }

@@ -15,6 +15,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.PastOrPresent;
+
+import org.springframework.lang.NonNull;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import lombok.Data;
@@ -39,22 +42,29 @@ public class Watering extends BaseEntity implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "REGISTRATION_DATE", nullable = false)
+	@NonNull
+	@PastOrPresent
 	private Date registrationDate;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "WATERING_DATE", nullable = false)
+	@NonNull
 	private Date wateringDate;
 
 	@Column(name = "SKIP", nullable = false)
-	private boolean skip;
+	@NonNull
+	private Boolean skip;
 
 	@Column(name = "PH", nullable = false)
-	private float ph;
+	@NonNull
+	private Float ph;
 
 	@Column(name = "EC", nullable = false)
-	private float ec;
+	@NonNull
+	private Float ec;
 
 	@OneToOne(mappedBy = "watering")
+	@NonNull
 	private Log log;
 
 	@ManyToMany

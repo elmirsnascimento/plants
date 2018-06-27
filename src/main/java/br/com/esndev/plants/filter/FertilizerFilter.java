@@ -20,11 +20,17 @@ public class FertilizerFilter {
 
 	private Long idUser;
 
-	private Integer nitrogenRatio;
+	private Integer minNitrogenRatio;
+	
+	private Integer maxNitrogenRatio;
 
-	private Integer phosphorusRatio;
+	private Integer minPhosphorusRatio;
+	
+	private Integer maxPhosphorusRatio;
 
-	private Integer potassiumRatio;
+	private Integer minPotassiumRatio;
+	
+	private Integer maxPotassiumRatio;
 
 	private Boolean onlyThoseOwnedByMyUser;
 

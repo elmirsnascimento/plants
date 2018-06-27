@@ -18,4 +18,7 @@ public interface UserRepository extends BaseRepository<User, UserFilter> {
 			+ " and (:#{#filter.email} is null or UPPER(u.email) = UPPER(:#{#filter.email}) )")
 	Page<User> findByFilter(@Param("filter") UserFilter filter, Pageable pageable);
 
+	@Query("select u.profilePicture from User u where u.id = :#{#idUser}  ")
+	byte[] getUserProfilePicture(@Param("idUser") Long idUser);
+
 }

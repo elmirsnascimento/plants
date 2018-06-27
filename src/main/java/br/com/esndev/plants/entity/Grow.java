@@ -17,6 +17,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import lombok.Data;
@@ -41,18 +46,24 @@ public class Grow extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GROW")
 	private @Getter @Setter Long id;
 
-	@Column(name = "NAME", nullable = false, length = 255)
+	@Column(name = "NAME", nullable = false, length = 50)
+	@NotEmpty
+	@Size(min=3, max=50)
 	private String name;
 
-	@Column(name = "TERMINATED", nullable = false, length = 255)
+	@Column(name = "TERMINATED", nullable = false)
+	@NonNull
 	private boolean terminated;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "REGISTRATION_DATE", nullable = false)
+	@NonNull
+	@PastOrPresent
 	private Date registrationDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "ID_USER", nullable = false)
+	@NonNull
 	private User user;
 
 	@OneToMany(mappedBy = "grow")

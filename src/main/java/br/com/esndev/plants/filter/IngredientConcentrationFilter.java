@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IngredientConcentrationFilter {
-	
-	private SoilIngredientFilter soilIngredientFilter;
-	
+
+	private Long[] idsSoilIngredients;
+
 }

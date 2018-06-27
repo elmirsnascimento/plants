@@ -15,7 +15,7 @@ public interface IngredientConcentrationRepository
 		extends BaseRepository<IngredientConcentration, IngredientConcentrationFilter> {
 
 	@Query("select ic from IngredientConcentration ic where "
-			+ " (:#{#filter.soilIngredientFilter.name} is null or UPPER(ic.soilIngredient.name) LIKE UPPER(CONCAT('%', :#{#filter.soilIngredientFilter.name}, '%'))) ")
+			+ " (:#{#filter.idsSoilIngredients} is null or UPPER(ic.soilIngredient.id) IN (:#{#filter.idsSoilIngredients})) ")
 	Page<IngredientConcentration> findByFilter(@Param("filter") IngredientConcentrationFilter filter,
 			Pageable pageable);
 

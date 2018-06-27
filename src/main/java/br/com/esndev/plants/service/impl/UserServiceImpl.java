@@ -10,4 +10,7 @@ import br.com.esndev.plants.service.impl.base.BaseServiceImpl;
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User, UserFilter, UserRepository> {
 
+	public byte[] getUserProfilePicture(Long idUser) {
+		return this.repository.getUserProfilePicture(idUser);
+	}
 }

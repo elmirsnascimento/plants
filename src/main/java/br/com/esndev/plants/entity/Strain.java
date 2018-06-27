@@ -14,13 +14,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.enumerator.Flowering;
-import br.com.esndev.plants.enumerator.Height;
 import br.com.esndev.plants.enumerator.RequiredExpertize;
 import br.com.esndev.plants.enumerator.Specie;
-import br.com.esndev.plants.enumerator.Yield;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -42,27 +46,36 @@ public class Strain extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STRAIN")
 	private Long id;
 
-	@Column(name = "NAME", nullable = false, length = 255, unique = true)
+	@Column(name = "NAME", nullable = false, length = 50, unique = true)
+	@NotEmpty
+	@Size(min = 2, max = 50)
 	private String name;
 
 	@Column(name = "ESPECIE", nullable = false)
 	@Enumerated(EnumType.STRING)
+	@NonNull
 	private Specie specie;
 
 	@Column(name = "REQUIRED_EXPERTIZE", nullable = false)
 	@Enumerated(EnumType.STRING)
+	@NonNull
 	private RequiredExpertize requiredExpertize;
 
 	@Column(name = "EXPECTED_HEIGHT", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Height expectedHeight;
+	@NonNull
+	@Min(value = 1)
+	@Max(value = 200)
+	private Float expectedHeight;
 
 	@Column(name = "EXPECTED_YIELD", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Yield expectedYield;
+	@NonNull
+	@Min(value = 1)
+	@Max(value = 200)
+	private Float expectedYield;
 
 	@Column(name = "EXPECTED_FLOWER_WEEKS", nullable = false)
 	@Enumerated(EnumType.STRING)
+	@NonNull
 	private Flowering expectedFlowerWeeks;
 
 	@OneToMany(mappedBy = "strain")

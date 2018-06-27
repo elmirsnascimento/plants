@@ -10,12 +10,19 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -37,20 +44,26 @@ public class User extends BaseEntity {
 	private Long id;
 
 	@NotNull
-	@Column(name = "NAME", length = 255, unique = true)
+	@Column(name = "NAME", length = 50, unique = true)
+	@NotEmpty
+	@Size(min = 3, max = 50)
 	private String name;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "REGISTRATION_DATE", nullable = false)
+	@NonNull
+	@PastOrPresent
 	private Date registrationDate;
 
 	@NotNull
-	@Column(name = "EMAIL", length = 50, unique = true)
+	@Column(name = "EMAIL", length = 50, unique = true, nullable = false)
+	@Email
 	private String email;
 
-	@NotNull
 	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "PASSWORD", length = 255, unique = false)
+	@Column(name = "PASSWORD", length = 50, nullable = false)
+	@NonNull
+	@Size(min = 8, max = 50)
 	private String password;
 
 	@OneToMany(mappedBy = "user")
@@ -59,6 +72,10 @@ public class User extends BaseEntity {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private Set<Fertilizer> fertilizers;
+
+	@Lob
+	@Column(name = "PROFILE_PICTURE", nullable = true)
+	private byte[] profilePicture;
 
 	public User(Long id, String name, String email) {
 		this.id = id;

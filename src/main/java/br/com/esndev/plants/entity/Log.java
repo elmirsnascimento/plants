@@ -20,6 +20,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
+
+import org.springframework.lang.NonNull;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.enumerator.LightType;
@@ -45,15 +50,20 @@ public class Log extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LOG")
 	private Long id;
 
-	@Column(name = "DESCRIPTION", nullable = true, length = 255)
+	@Column(name = "DESCRIPTION", nullable = true, length = 500)
+	@Max(value=500)
 	private String description;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "REGISTRATION_DATE", nullable = false)
+	@NonNull
+	@PastOrPresent
 	private Date registrationDate;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "LOG_DATE", nullable = false)
+	@NonNull
+	@PastOrPresent
 	private Date logDate;
 
 	@Column(name = "LIGHT_TYPE", nullable = true)
@@ -61,36 +71,43 @@ public class Log extends BaseEntity implements Serializable {
 	private LightType lightType;
 
 	@Column(name = "LIGHT_IN_WATTS", nullable = true)
-	private int lightInWatts;
+	@Min(value=1)
+	@Max(value=2000)
+	private Integer lightInWatts;
 
 	@Column(name = "VESSEL_SIZE", nullable = true)
-	private int vesselSize;
+	@Min(value=1)
+	@Max(value=500)
+	private Integer vesselSize;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_SOIL_MIX", nullable = true)
 	private SoilMix soilMix;
 
 	@Column(name = "ATTENDED", nullable = false)
-	private int attended;
+	private Boolean attended;
 
 	@Transient
-	private int wateringFrequency;
+	private Integer wateringFrequency;
 
 	@Transient
-	private float ph;
+	private Float ph;
 
 	@Transient
-	private float ec;
+	private Float ec;
 
 	@OneToOne
 	@JoinColumn(name = "ID_WATERING", nullable = true)
 	private Watering watering;
 
-	@Column(name = "WATERING_IN_LITERS", nullable = true)
-	private int wateringInLiters;
+	@Column(name = "WATERING_AMOUNT", nullable = true)
+	@Min(value=1)
+	@Max(value=500)
+	private Integer wateringInLiters;
 
 	@Column(name = "STAGE", nullable = false)
 	@Enumerated(EnumType.STRING)
+	@NonNull
 	private Stage stage;
 
 	@Transient
@@ -98,6 +115,7 @@ public class Log extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_PLANT", nullable = false)
+	@NonNull
 	private Plant plant;
 
 }

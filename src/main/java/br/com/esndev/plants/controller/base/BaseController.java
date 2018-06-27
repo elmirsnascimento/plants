@@ -3,6 +3,8 @@ package br.com.esndev.plants.controller.base;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -30,7 +32,7 @@ public class BaseController<E extends BaseEntity, F, S extends BaseService<E, F>
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> create(@RequestBody E entity) {
+	public ResponseEntity<Object> create(@RequestBody @Valid E entity) {
 		try {
 			return ResponseEntity.accepted().body(getService().save(entity));
 		} catch (DataIntegrityViolationException e) {
@@ -39,7 +41,7 @@ public class BaseController<E extends BaseEntity, F, S extends BaseService<E, F>
 	}
 
 	@PostMapping(value = "/many", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> createMany(@RequestBody List<E> entities) {
+	public ResponseEntity<Object> createMany(@RequestBody @Valid List<E> entities) {
 		try {
 			return ResponseEntity.accepted().body(getService().saveAll(entities));
 		} catch (DataIntegrityViolationException e) {
@@ -48,7 +50,7 @@ public class BaseController<E extends BaseEntity, F, S extends BaseService<E, F>
 	}
 
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody E entity) {
+	public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody @Valid E entity) {
 		Optional<E> optionalEntity = getService().findById(id);
 
 		if (!optionalEntity.isPresent()) {
