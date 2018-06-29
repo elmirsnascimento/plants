@@ -26,6 +26,8 @@ public class JpaConfig {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 
+
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean
 	public ServletRegistrationBean h2servletRegistration() {

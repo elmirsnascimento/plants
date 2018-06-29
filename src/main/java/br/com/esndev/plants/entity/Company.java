@@ -39,4 +39,8 @@ public class Company extends BaseEntity implements Serializable {
 	@NotEmpty
 	@Size(min = 2, max = 50)
 	private String name;
+
+	public Company(String name) {
+		this.name = name;
+	}
 }

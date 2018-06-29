@@ -1,0 +1,32 @@
+[
+	{
+		"name": "CNS17® Bloom Formula",
+		"company": {
+			"id": 20
+		},
+		"stage": "FLOWERING",
+		"dilutableInWater": true,
+		"waterPumped": false,
+		"nitrogenRatio": 2,
+		"phosphorusRatio": 2,
+		"potassiumRatio": 3
+	},
+	{
+		"name": "Fertilizant Organic Bloom Care",
+		"soilIngredients": [
+			{
+				"id": 1
+			}
+		],
+		"stage": "FLOWERING",
+		"dilutableInWater": true,
+		"waterPumped": true,
+		"nitrogenRatio": 2,
+		"phosphorusRatio": 2,
+		"potassiumRatio": 3,
+		"user": 
+			{
+				"id": 25
+			}
+	}
+]
