@@ -6,14 +6,18 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,18 +31,20 @@ import br.com.esndev.plants.repository.CompanyRepository;
 import br.com.esndev.plants.service.impl.CompanyServiceImpl;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = PlantsApplication.class)
+@SpringBootTest(classes = { PlantsApplication.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CompanyServiceTest {
 
+	@Autowired
 	CompanyServiceImpl companyService;
 
-	@Mock
+	@MockBean
 	CompanyRepository companyRepository;
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-		this.companyService = new CompanyServiceImpl(companyRepository);
 	}
 
 	@After
@@ -53,6 +59,13 @@ public class CompanyServiceTest {
 		when(companyService.save(entity)).thenReturn(entity);
 		assertNotNull(companyService.save(entity).getId());
 		verify(companyRepository, times(1)).save(entity);
+	}
+
+	@Test
+	public void testSaveWithInalidEntity() throws Exception {
+		Company entity = new Company();
+		companyRepository.save(entity);
+		companyRepository.flush();
 	}
 
 	@Test

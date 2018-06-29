@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = { "br.com.esndev.plants.repository" })
 @EntityScan(basePackages = "br.com.esndev.plants.entity")
 @EnableTransactionManagement
+@Profile("dev")
+@PropertySource("application.properties")
 public class JpaConfig {
 
 	@Bean
@@ -25,8 +29,6 @@ public class JpaConfig {
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
-
-
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean

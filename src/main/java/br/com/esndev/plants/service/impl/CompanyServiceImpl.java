@@ -11,8 +11,4 @@ import br.com.esndev.plants.service.impl.base.BaseServiceImpl;
 @Service
 @Transactional
 public class CompanyServiceImpl extends BaseServiceImpl<Company, CompanyFilter, CompanyRepository> {
-
-	public CompanyServiceImpl(CompanyRepository repository) {
-		this.repository = repository;
-	}
 }
