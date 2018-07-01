@@ -12,7 +12,7 @@ public interface BaseService<E, F> {
 
 	Optional<E> findById(Long id);
 
-	Page<E> findByFilter(F filter, Pageable pageable);
+	List<E> findByFilter(F filter);
 
 	void delete(E entity);
 

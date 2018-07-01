@@ -1,7 +1,7 @@
 package br.com.esndev.plants.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,6 +20,6 @@ public interface GrowRepository extends BaseRepository<Grow, GrowFilter> {
 			+ " AND (:#{#filter.terminated} is null or (:#{#filter.terminated} is true and g.terminated = true)"
 			+ " OR (:#{#filter.terminated} is false and g.terminated = false)) "
 			+ " AND (:#{#filter.strains} is null or s.id IN :#{#filter.idsStrains}) ")
-	Page<Grow> findByFilter(@Param("filter") GrowFilter filter, Pageable pageable);
+	List<Grow> findByFilter(@Param("filter") GrowFilter filter);
 
 }

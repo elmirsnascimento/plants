@@ -3,9 +3,6 @@ package br.com.esndev.plants.controller;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,17 +47,17 @@ public class ImageController extends BaseController<Image, ImageFilter, ImageSer
 
 	@Override
 	@PostMapping(value = "/find")
-	public Page<Image> findByFilter(@RequestBody ImageFilter filter, @PageableDefault(size = 5) Pageable pageable) {
+	public ResponseEntity<Object> findByFilter(@RequestBody ImageFilter filter) {
 		if (filter.isFertilizerElement()) {
-			return getService().findByFertilizerId(filter, pageable);
+			return ResponseEntity.accepted().body(getService().findByFertilizerId(filter));
 		} else if (filter.isGrowElement()) {
-			return getService().findByGrowId(filter, pageable);
+			return ResponseEntity.accepted().body(getService().findByGrowId(filter));
 		} else if (filter.isPlantElement()) {
-			return getService().findByPlantId(filter, pageable);
+			return ResponseEntity.accepted().body(getService().findByPlantId(filter));
 		} else if (filter.isStrainElement()) {
-			return getService().findByStrainId(filter, pageable);
+			return ResponseEntity.accepted().body(getService().findByStrainId(filter));
 		} else {
-			return getService().findBySoilMixId(filter, pageable);
+			return ResponseEntity.accepted().body(getService().findBySoilMixId(filter));
 		}
 	}
 }

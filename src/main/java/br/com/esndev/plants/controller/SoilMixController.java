@@ -2,7 +2,6 @@ package br.com.esndev.plants.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +49,9 @@ public class SoilMixController extends BaseController<SoilMix, SoilMixFilter, So
 		SoilMixFilter filter = new SoilMixFilter();
 		filter.setId(id);
 		filter.setIdUser(idUser);
-		Optional<List<SoilMix>> optionalEntities = getService().findByFilter(filter);
+		List<SoilMix> entities = getService().findByFilter(filter);
 
-		if (!optionalEntities.isPresent()) {
+		if (!entities.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		getService().deleteById(id);

@@ -1,7 +1,7 @@
 package br.com.esndev.plants.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,6 +20,6 @@ public interface StrainRepository extends BaseRepository<Strain, StrainFilter> {
 			+ " AND ((:#{#filter.minHeight} is null or :#{#filter.maxHeight} is null) or s.expectedHeight BETWEEN :#{#filter.minHeight} and :#{#filter.maxHeight}) "
 			+ " AND ((:#{#filter.minYield} is null or :#{#filter.maxYield} is null) or s.expectedYield BETWEEN :#{#filter.minYield} and :#{#filter.maxYield}) "
 			+ " AND (:#{#filter.flowerings} is null or s.expectedFlowerWeeks IN :#{#filter.flowerings}) ")
-	Page<Strain> findByFilter(@Param("filter") StrainFilter filter, Pageable pageable);
+	List<Strain> findByFilter(@Param("filter") StrainFilter filter);
 
 }

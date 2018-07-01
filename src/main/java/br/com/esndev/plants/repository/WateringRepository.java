@@ -1,7 +1,7 @@
 package br.com.esndev.plants.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,5 +18,5 @@ public interface WateringRepository extends BaseRepository<Watering, WateringFil
 			+ " AND (:#{#filter.idsFertilizers} is null or f.id IN :#{#filter.idsFertilizers}) "
 			+ " AND (:#{#filter.skip} is null or (:#{#filter.skip} is true and w.skip is true )"
 			+ " or (:#{#filter.skip} is false and w.skip is false )) ")
-	Page<Watering> findByFilter(@Param("filter") WateringFilter filter, Pageable pageable);
+	List<Watering> findByFilter(@Param("filter") WateringFilter filter);
 }

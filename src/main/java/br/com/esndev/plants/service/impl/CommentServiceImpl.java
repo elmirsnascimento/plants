@@ -1,7 +1,7 @@
 package br.com.esndev.plants.service.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import br.com.esndev.plants.entity.Comment;
@@ -12,27 +12,27 @@ import br.com.esndev.plants.service.impl.base.BaseServiceImpl;
 @Service
 public class CommentServiceImpl extends BaseServiceImpl<Comment, CommentFilter, CommentRepository> {
 
-	public Page<Comment> findByUserId(CommentFilter filter, Pageable pageable) {
-		return this.getRepository().findByUserId(filter, pageable);
+	public List<Comment> findByUserId(CommentFilter filter) {
+		return this.getRepository().findByUserId(filter);
 	}
 
-	public Page<Comment> findByFertilizerId(CommentFilter filter, Pageable pageable) {
-		return this.getRepository().findByFertilizerId(filter, pageable);
+	public List<Comment> findByFertilizerId(CommentFilter filter) {
+		return this.getRepository().findByFertilizerId(filter);
 	}
 
-	public Page<Comment> findByGrowId(CommentFilter filter, Pageable pageable) {
-		return this.getRepository().findByGrowId(filter, pageable);
+	public List<Comment> findByGrowId(CommentFilter filter) {
+		return this.getRepository().findByGrowId(filter);
 	}
 
-	public Page<Comment> findByPlantId(CommentFilter filter, Pageable pageable) {
-		return this.getRepository().findByPlantId(filter, pageable);
+	public List<Comment> findByPlantId(CommentFilter filter) {
+		return this.getRepository().findByPlantId(filter);
 	}
 
-	public Page<Comment> findByStrainId(CommentFilter filter, Pageable pageable) {
-		return this.getRepository().findByStrainId(filter, pageable);
+	public List<Comment> findByStrainId(CommentFilter filter) {
+		return this.getRepository().findByStrainId(filter);
 	}
 
-	public Page<Comment> findBySoilMixId(CommentFilter filter, Pageable pageable) {
-		return this.getRepository().findBySoilMixId(filter, pageable);
+	public List<Comment> findBySoilMixId(CommentFilter filter) {
+		return this.getRepository().findBySoilMixId(filter);
 	}
 }

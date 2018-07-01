@@ -1,7 +1,7 @@
 package br.com.esndev.plants.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -15,6 +15,6 @@ public interface SoilIngredientRepository extends BaseRepository<SoilIngredient,
 
 	@Query("select si from SoilIngredient si where "
 			+ " (:#{#filter.name} is null or UPPER(si.name) LIKE UPPER(CONCAT('%', :#{#filter.name}, '%'))) ")
-	Page<SoilIngredient> findByFilter(@Param("filter") SoilIngredientFilter filter, Pageable pageable);
+	List<SoilIngredient> findByFilter(@Param("filter") SoilIngredientFilter filter);
 
 }

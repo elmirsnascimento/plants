@@ -1,7 +1,7 @@
 package br.com.esndev.plants.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,6 @@ public interface IngredientConcentrationRepository
 
 	@Query("select ic from IngredientConcentration ic where "
 			+ " (:#{#filter.idsSoilIngredients} is null or UPPER(ic.soilIngredient.id) IN (:#{#filter.idsSoilIngredients})) ")
-	Page<IngredientConcentration> findByFilter(@Param("filter") IngredientConcentrationFilter filter,
-			Pageable pageable);
+	List<IngredientConcentration> findByFilter(@Param("filter") IngredientConcentrationFilter filter);
 
 }

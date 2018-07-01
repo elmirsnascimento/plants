@@ -7,8 +7,6 @@ import java.util.Optional;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import br.com.esndev.plants.entity.base.BaseEntity;
 import br.com.esndev.plants.repository.base.BaseRepository;
@@ -30,8 +28,8 @@ public class BaseServiceImpl<E extends BaseEntity, F, R extends BaseRepository<E
 	}
 
 	@Override
-	public Page<E> findByFilter(F filter, Pageable pageable) {
-		return (Page<E>) repository.findByFilter(filter, pageable);
+	public List<E> findByFilter(F filter) {
+		return (List<E>) repository.findByFilter(filter);
 	}
 
 	@Override

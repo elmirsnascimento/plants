@@ -1,7 +1,7 @@
 package br.com.esndev.plants.service.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import br.com.esndev.plants.entity.Image;
@@ -16,24 +16,24 @@ public class ImageServiceImpl extends BaseServiceImpl<Image, ImageFilter, ImageR
 		return this.getRepository().findByUserId(filter);
 	}
 
-	public Page<Image> findByFertilizerId(ImageFilter filter, Pageable pageable) {
-		return this.getRepository().findByFertilizerId(filter, pageable);
+	public List<Image> findByFertilizerId(ImageFilter filter) {
+		return this.getRepository().findByFertilizerId(filter);
 	}
 
-	public Page<Image> findByGrowId(ImageFilter filter, Pageable pageable) {
-		return this.getRepository().findByGrowId(filter, pageable);
+	public List<Image> findByGrowId(ImageFilter filter) {
+		return this.getRepository().findByGrowId(filter);
 	}
 
-	public Page<Image> findByPlantId(ImageFilter filter, Pageable pageable) {
-		return this.getRepository().findByPlantId(filter, pageable);
+	public List<Image> findByPlantId(ImageFilter filter) {
+		return this.getRepository().findByPlantId(filter);
 	}
 
-	public Page<Image> findByStrainId(ImageFilter filter, Pageable pageable) {
-		return this.getRepository().findByStrainId(filter, pageable);
+	public List<Image> findByStrainId(ImageFilter filter) {
+		return this.getRepository().findByStrainId(filter);
 	}
 
-	public Page<Image> findBySoilMixId(ImageFilter filter, Pageable pageable) {
-		return this.getRepository().findBySoilMixId(filter, pageable);
+	public List<Image> findBySoilMixId(ImageFilter filter) {
+		return this.getRepository().findBySoilMixId(filter);
 	}
 
 }

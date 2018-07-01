@@ -1,7 +1,7 @@
 package br.com.esndev.plants.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -22,7 +22,7 @@ public interface PlantRepository extends BaseRepository<Plant, PlantFilter> {
 			+ " AND (:#{#filter.idGrow} is null or p.id = :#{#filter.idGrow}) "
 			+ " AND (:#{#filter.stillAlive} is null or (:#{#filter.stillAlive} is false and ll.stage IN ('HARVEST', 'DRYING'))"
 			+ " OR (:#{#filter.stillAlive} is true and ll.stage NOT IN ('HARVEST', 'DRYING'))) ")
-	Page<Plant> findByFilter(@Param("filter") PlantFilter filter, Pageable pageable);
+	List<Plant> findByFilter(@Param("filter") PlantFilter filter);
 
 	@Query("select DATEDIFF('DAY', p.floweringDate, p.vegetativeDate) from Plant p where p.id = :#{#idPlant}  ")
 	int getDaysToFlowering(@Param("idPlant") Long idPlant);

@@ -36,7 +36,26 @@ public class Company extends BaseEntity implements Serializable {
 	private Long id;
 
 	@Column(name = "NAME", nullable = false, length = 50)
-	@NotEmpty
-	@Size(min = 2, max = 50)
+	@NotEmpty(message = "Field Name must not be empty")
+	@Size(min = 2, max = 50, message = " Field Name must have between {min} and {max} characters")
 	private String name;
+
+	@Override
+	public boolean equalsValidationForUpdate(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Company other = (Company) obj;
+		if (id == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	
 }
